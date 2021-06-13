@@ -1,0 +1,26 @@
+{
+  "name": "get_domain_info",
+  "version": "1.0.0",
+  "description": "get domain info from value-domain, muu-muu-domain, and onamae.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kefujiwa/get_domain_info.git"
+  },
+  "author": "Kenshi Fujiwara",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kefujiwa/get_domain_info/issues"
+  },
+  "homepage": "https://github.com/kefujiwa/get_domain_info#readme",
+  "devDependencies": {
+    "@google/clasp": "^2.3.2",
+    "tslint": "^6.1.3"
+  },
+  "dependencies": {
+    "@types/google-apps-script": "^1.0.34"
+  }
+}
