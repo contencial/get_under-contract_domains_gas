@@ -5,6 +5,7 @@ function getDomainInfo() {
 	try {
 			domainList = getMethodApi();
 			writeDomainList(domainList, TARGET_SHEET);
+			console.log(`Complete: total_list_number: ${domainList.length}`);
 	} catch (e) {
 		console.log(e.message);
 	}
@@ -27,6 +28,12 @@ function getMethodApi() {
 		console.log(response.getResponseCode());
 		let result = JSON.parse(response.getContentText());
 		let domainList: Array<Array<string>> = result['results']
+			.filter(function(data) {
+				let now = new Date();
+				let today = new Date(`${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`);
+				let expiration_date = new Date(data["expirationdate"];
+				return today <= expiration_date;
+			})
 			.map(data => [
 				data['domainid'],
 				data['domainname'],
@@ -35,7 +42,7 @@ function getMethodApi() {
 				data['autorenew'],
 				data['autorenew_all'],
 				data['autorenew_domain']
-				]);
+			]);
 		return domainList;
 	} catch (e) {
 		console.log(e.message);
