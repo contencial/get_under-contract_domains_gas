@@ -2,3 +2,4 @@ node_modules/*
 .clasp.json
 srcs/gas/appsscript.json
 srcs/python/.python-version
+srcs/python/modules/__pycache__
