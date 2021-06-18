@@ -50,9 +50,9 @@ def write_domain_list(domain_info):
     cell_list = sheet.range('F1:J1')
     cell_list[0].value = 'Size'
     cell_list[1].value = len(domain_info)
-    cell_list[2].value = '=HYPERLINK("https://www.value-domain.com/login.php", "バリューへGo!!!")'
-    cell_list[3].value = '=HYPERLINK("https://muumuu-domain.com/?mode=conpane", "ムームーへGo!!!")'
-    cell_list[4].value = '=HYPERLINK("https://navi.onamae.com/domain", "お名前へGo!!!")'
+    cell_list[2].value = '=HYPERLINK("https://www.value-domain.com/login.php", "Go to バリュー")'
+    cell_list[3].value = '=HYPERLINK("https://muumuu-domain.com/?mode=conpane", "Go to ムームー")'
+    cell_list[4].value = '=HYPERLINK("https://navi.onamae.com/domain", "Go to お名前")'
     sheet.update_cells(cell_list, value_input_option='USER_ENTERED')
 
 ### main_script ###
@@ -76,7 +76,7 @@ if __name__ == '__main__':
             exit(1)
         domain_info.extend(domain_chunk)
         logger.debug(f'main: add onamae_com: {len(domain_info)}')
-       # write_domain_list(domain_info)
+        write_domain_list(domain_info)
         logger.debug('Finish')
     except Exception as err:
         logger.debug(f'main: {err}')

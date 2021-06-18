@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 
 import os, sys
 import time,requests
+import random
 from bs4 import BeautifulSoup
 
 # Logger setting
@@ -40,9 +41,15 @@ def audio_to_text(driver, mp3Path, audioToTextDelay):
 
     return result
 
-def save_file(content, filename):
+def request_audio_file(href, filename):
+    logger.debug(f'by_pass_captcha: href: {href}')
+    response = requests.get(href, stream=True)
+    logger.debug(f'by_pass_captcha: request_audio_file: {response.status_code}')
+    if response.status_code != 200:
+        logger.debug(f'by_pass_captcha: request_audio_file: try again')
+        request_audio_file(href, filename)
     with open(filename, "wb") as handle:
-        for data in content.iter_content():
+        for data in response.iter_content():
             handle.write(data)
 
 def by_pass_captcha(driver):
@@ -74,23 +81,20 @@ def by_pass_captcha(driver):
         try:
             while True:
                 href = driver.find_element_by_id('audio-source').get_attribute('src')
-                response = requests.get(href, stream=True)
-                save_file(response,filename)
+                request_audio_file(href, filename)
                 response = audio_to_text(driver, os.getcwd() + '/' + filename, audioToTextDelay)
                 logger.debug(response)
     
                 driver.switch_to.default_content()
                 iframe = driver.find_elements_by_tag_name('iframe')[audioBtnIndex]
                 driver.switch_to.frame(iframe)
+                time.sleep(random.randint(5, 10))
     
                 inputbtn = driver.find_element_by_id('audio-response')
                 inputbtn.send_keys(response)
                 inputbtn.send_keys(Keys.ENTER)
                 logger.debug("by_pass_captcha: send audio answer")
-    
-                time.sleep(10)
-                errorMsg = driver.find_elements_by_class_name('rc-audiochallenge-error-message')[0]
-                logger.debug(f'by_pass_captcha: {errorMsg.text}')
+                time.sleep(random.randint(8, 11))
 
                 driver.switch_to.default_content()
                 contents = BeautifulSoup(driver.page_source, "html.parser")
@@ -101,7 +105,8 @@ def by_pass_captcha(driver):
 
                 driver.switch_to.frame(iframe)
         except Exception as err:
-            logger.debug(driver.page_source)
+            with open("error_page_source.txt", "w") as handle:
+                handle.write(driver.page_source)
             logger.debug(f'by_pass_captcha: {err}')
             logger.debug('by_pass_captcha: Caught. Need to change proxy now')
             return False

@@ -93,6 +93,7 @@ def get_domain_info():
         driver = webdriver.Chrome(executable_path=webdriverPath, options=options)
         
         driver.get(url)
+        driver.set_window_size(1200, 1053)
         
         driver.find_element_by_name("loginId").send_keys(login)
         driver.find_element_by_name("loginPassword").send_keys(password)
