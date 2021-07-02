@@ -38,7 +38,7 @@ function getMethodApi() {
 				index + 1,
 				data['domainname'],
 				"バリュー",
-				data['expirationdate'],
+				data['expirationdate'].replace(/-/g, '/'),
 				data['autorenew'],
 			]);
 		return domainList;
@@ -67,12 +67,14 @@ function writeDomainList(domainList: Array<Array<string>>,  TARGET_SHEET) {
 	TARGET_SHEET.getRange('F1').setValue('Size');
 	TARGET_SHEET.getRange('G1').setValue(domainList.length);
 	TARGET_SHEET.getRange('H1').setValue('=HYPERLINK("https://www.value-domain.com/login.php", "バリューへGo!!!")');
+	TARGET_SHEET.getRange('I1').setValue(Utilities.formatDate(new Date(), 'JST', 'yyyy-MM-dd'))
+		.setBackground('#efefef');
 	TARGET_SHEET.getRange('A1:F1').setBackground('#c9daf8');
-	TARGET_SHEET.getRange('A1:H1')
+	TARGET_SHEET.getRange('A1:H1').setFontWeight('bold');
+	TARGET_SHEET.getRange('A1:I1')
 		.setHorizontalAlignment('center')
 		.setVerticalAlignment('middle')
-		.setFontFamily('Meiryo')
-		.setFontWeight('bold');
+		.setFontFamily('Meiryo');
 	TARGET_SHEET.getRange('F1:G1')
 		.setBorder(true, true, true, true, null, null, 'black', SpreadsheetApp.BorderStyle.SOLID);
 	TARGET_SHEET.getRange(2, 1, domainList.length, 5).setValues(domainList).setFontFamily('Meiryo');
