@@ -1,6 +1,6 @@
 function getDomainInfo() {
 	const SPREADSHEET_ID = PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID');
-	const TARGET_SHEET = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName('契約中ドメイン（バリュー）');
+	const TARGET_SHEET = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName('バリュー');
 	let domainList: Array<Array<string>> = [];
 	try {
 			domainList = getMethodApi();
@@ -34,14 +34,12 @@ function getMethodApi() {
 				let expiration_date = new Date(data["expirationdate"];
 				return today <= expiration_date;
 			})
-			.map(data => [
-				data['domainid'],
+			.map((data, index) => [
+				index + 1,
 				data['domainname'],
-				data['registrar'],
+				"バリュー",
 				data['expirationdate'],
 				data['autorenew'],
-				data['autorenew_all'],
-				data['autorenew_domain']
 			]);
 		return domainList;
 	} catch (e) {
@@ -61,36 +59,36 @@ function writeDomainList(domainList: Array<Array<string>>,  TARGET_SHEET) {
 	TARGET_SHEET.clear();
 	if (TARGET_SHEET.getFilter())
 		TARGET_SHEET.getFilter().remove();
-	TARGET_SHEET.getRange('A1').setValue('ドメインID');
+	TARGET_SHEET.getRange('A1').setValue('No');
 	TARGET_SHEET.getRange('B1').setValue('ドメイン名');
-	TARGET_SHEET.getRange('C1').setValue('レジストラ');
+	TARGET_SHEET.getRange('C1').setValue('取得先');
 	TARGET_SHEET.getRange('D1').setValue('有効期限');
 	TARGET_SHEET.getRange('E1').setValue('自動更新\nフラグ');
-	TARGET_SHEET.getRange('F1').setValue('自動更新\nドメイン全体設定');
-	TARGET_SHEET.getRange('G1').setValue('自動更新\nドメイン個別設定');
-	TARGET_SHEET.getRange('H1').setValue('Size');
-	TARGET_SHEET.getRange('I1').setValue(domainList.length);
-	TARGET_SHEET.getRange('J1').setValue('=HYPERLINK("https://www.value-domain.com/login.php", "バリューへGo!!!")');
-	TARGET_SHEET.getRange('A1:H1').setBackground('#c9daf8');
-	TARGET_SHEET.getRange('A1:J1')
+	TARGET_SHEET.getRange('F1').setValue('Size');
+	TARGET_SHEET.getRange('G1').setValue(domainList.length);
+	TARGET_SHEET.getRange('H1').setValue('=HYPERLINK("https://www.value-domain.com/login.php", "バリューへGo!!!")');
+	TARGET_SHEET.getRange('A1:F1').setBackground('#c9daf8');
+	TARGET_SHEET.getRange('A1:H1')
 		.setHorizontalAlignment('center')
 		.setVerticalAlignment('middle')
 		.setFontFamily('Meiryo')
 		.setFontWeight('bold');
-	TARGET_SHEET.getRange('H1:I1')
+	TARGET_SHEET.getRange('F1:G1')
 		.setBorder(true, true, true, true, null, null, 'black', SpreadsheetApp.BorderStyle.SOLID);
-	TARGET_SHEET.getRange(2, 1, domainList.length, 7).setValues(domainList).setFontFamily('Meiryo');
+	TARGET_SHEET.getRange(2, 1, domainList.length, 5).setValues(domainList).setFontFamily('Meiryo');
 	TARGET_SHEET.getRange(2, 1, domainList.length, 1).setHorizontalAlignment('center');
-	TARGET_SHEET.getRange(1, 1, TARGET_SHEET.getLastRow(), 7).createFilter();
+	TARGET_SHEET.getRange(1, 1, TARGET_SHEET.getLastRow(), 5).createFilter();
 	TARGET_SHEET.setFrozenRows(1);
 	TARGET_SHEET.setRowHeight(1, 40);
-	for (let col = 1; col <= 10; col++) {
-		if (col == 2)
+	for (let col = 1; col <= 8; col++) {
+		if (col == 1)
+			TARGET_SHEET.setColumnWidth(col, 50);
+		else if (col == 2)
 			TARGET_SHEET.setColumnWidth(col, 200);
-		else if (col == 6 || col == 7 || col == 10)
-			TARGET_SHEET.setColumnWidth(col, 150);
-		else if (col == 8 || col == 9)
+		else if (col == 6 || col == 7)
 			TARGET_SHEET.setColumnWidth(col, 70);
+		else if (col == 8)
+			TARGET_SHEET.setColumnWidth(col, 150);
 		else
 			TARGET_SHEET.setColumnWidth(col, 100);
 	}
