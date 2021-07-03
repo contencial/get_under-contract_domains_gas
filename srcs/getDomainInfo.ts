@@ -69,14 +69,15 @@ function writeDomainList(domainList: Array<Array<string>>,  TARGET_SHEET) {
 	TARGET_SHEET.getRange('C1').setValue('取得先');
 	TARGET_SHEET.getRange('D1').setValue('有効期限');
 	TARGET_SHEET.getRange('E1').setValue('自動更新\nフラグ');
-	TARGET_SHEET.getRange('F1').setValue('自動更新\nフラグ');
+	TARGET_SHEET.getRange('F1').setValue('自動更新\n管理対象');
 	TARGET_SHEET.getRange('G1').setValue('Size');
 	TARGET_SHEET.getRange('H1').setValue(domainList.length);
-	TARGET_SHEET.getRange('I1').setValue('=HYPERLINK("https://www.value-domain.com/login.php", "バリューへGo!!!")');
-	TARGET_SHEET.getRange('J1').setValue(Utilities.formatDate(new Date(), 'JST', 'yyyy-MM-dd'))
+	TARGET_SHEET.getRange('I1').setValue(Utilities.formatDate(new Date(), 'JST', 'yyyy-MM-dd'))
 		.setBackground('#efefef');
+	TARGET_SHEET.getRange('J1').setValue('=HYPERLINK("https://www.value-domain.com/login.php", "バリューへGo!!!")')
+		.setFontWeight('bold');
 	TARGET_SHEET.getRange('A1:G1').setBackground('#c9daf8');
-	TARGET_SHEET.getRange('A1:I1').setFontWeight('bold');
+	TARGET_SHEET.getRange('A1:H1').setFontWeight('bold');
 	TARGET_SHEET.getRange('A1:J1')
 		.setHorizontalAlignment('center')
 		.setVerticalAlignment('middle')
@@ -95,7 +96,7 @@ function writeDomainList(domainList: Array<Array<string>>,  TARGET_SHEET) {
 			TARGET_SHEET.setColumnWidth(col, 200);
 		else if (col == 7 || col == 8)
 			TARGET_SHEET.setColumnWidth(col, 70);
-		else if (col == 9)
+		else if (col == 10)
 			TARGET_SHEET.setColumnWidth(col, 150);
 		else
 			TARGET_SHEET.setColumnWidth(col, 100);
