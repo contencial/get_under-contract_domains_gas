@@ -1,6 +1,6 @@
 function oraganizeEverySheet() {
-	const SHEET_LIST: Array<string> = ['ムームー', 'お名前'];
 	const SPREADSHEET_ID = PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID');
+	const SHEET_LIST: Array<string> = ['ムームー', 'お名前'];
 	SHEET_LIST.forEach(function(element) {
 		formatSheet(SPREADSHEET_ID, element);
 	});

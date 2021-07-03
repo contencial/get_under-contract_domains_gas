@@ -34,7 +34,7 @@ function getMethodApi() {
 				let expiration_date = new Date(data["expirationdate"];
 				return today <= expiration_date;
 			})
-			.map( function(data, index) {
+			.map(function(data, index) {
 				autorenew_target = '-';
 				if (data['autorenew'] == 1) {
 					autorenew_target = `=IF(COUNTIF(\'ドメイン自動更新管理\'!B4:B63, "${data['domainname']}"), "対象", "対象外")`;
