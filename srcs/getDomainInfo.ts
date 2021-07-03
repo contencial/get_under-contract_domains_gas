@@ -37,7 +37,7 @@ function getMethodApi() {
 			.map( function(data, index) {
 				autorenew_target = '-';
 				if (data['autorenew'] == 1) {
-					autorenew_target = `=IF(COUNTIF(\'ドメイン自動更新管理\'!B4:B63, "${data['autorenew']}"), "対象", "対象外")`;
+					autorenew_target = `=IF(COUNTIF(\'ドメイン自動更新管理\'!B4:B63, "${data['domainname']}"), "対象", "対象外")`;
 				}
 				return [index + 1,
 						data['domainname'],
