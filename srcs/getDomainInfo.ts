@@ -69,7 +69,7 @@ function writeDomainList(domainList: Array<Array<string>>,  TARGET_SHEET) {
 	TARGET_SHEET.getRange('C1').setValue('取得先');
 	TARGET_SHEET.getRange('D1').setValue('有効期限');
 	TARGET_SHEET.getRange('E1').setValue('自動更新\nフラグ');
-	TARGET_SHEET.getRange('F1').setValue('自動更新\n管理対象');
+	TARGET_SHEET.getRange('F1').setValue('自動更新\n対象');
 	TARGET_SHEET.getRange('G1').setValue('Size');
 	TARGET_SHEET.getRange('H1').setValue(domainList.length);
 	TARGET_SHEET.getRange('I1').setValue(Utilities.formatDate(new Date(), 'JST', 'yyyy-MM-dd'))
