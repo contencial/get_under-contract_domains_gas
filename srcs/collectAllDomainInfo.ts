@@ -17,6 +17,12 @@ function collectDomainInfo(SPREADSHEET_ID, sheet: string) {
 	const TARGET_SHEET = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(sheet);
 	let checkDate: string = TARGET_SHEET.getRange('I1').getValue();
 	let domainInfo: Array<Array<string>> = TARGET_SHEET.getRange(2, 2, TARGET_SHEET.getLastRow() - 1, 5).getValues()
+		.filter(function(data) {
+			let now = new Date();
+			let today = new Date(`${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`);
+			let expiration_date = new Date(data[2]);
+			return today <= expiration_date;
+		})
 		.map(data => data.concat(checkDate));
 	return domainInfo;
 }
