@@ -1,13 +1,16 @@
 function oraganizeEverySheet() {
 	const SPREADSHEET_ID = PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID');
-	const SHEET_LIST: Array<string> = ['ムームー', 'お名前'];
-	SHEET_LIST.forEach(function(element) {
-		formatSheet(SPREADSHEET_ID, element);
+	const UNDER_CONTRACT_LIST: Array<string> = ['ムームー', 'お名前'];
+	UNDER_CONTRACT_LIST.forEach(function(element) {
+		formatUnderContractSheet(SPREADSHEET_ID, element);
 	});
-	formatFtpSheet(SPREADSHEET_ID);
+	const REGISTERED_LIST: Array<string> = ['登録中ドメイン（FTPサーバー）', '登録中ドメイン（123サーバー）'];
+	REGISTERED_LIST.forEach(function(element) {
+		formatRegisteredSheet(SPREADSHEET_ID, element);
+	});
 }
 
-function formatSheet(SPREADSHEET_ID, sheet: string) {
+function formatUnderContractSheet(SPREADSHEET_ID, sheet: string) {
 	const TARGET_SHEET = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(sheet);
 	if (TARGET_SHEET.getFilter())
 		TARGET_SHEET.getFilter().remove();
@@ -41,8 +44,8 @@ function formatSheet(SPREADSHEET_ID, sheet: string) {
 	}
 }
 
-function formatFtpSheet(SPREADSHEET_ID) {
-	const TARGET_SHEET = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName('登録中ドメイン（FTPサーバー）');
+function formatRegisteredSheet(SPREADSHEET_ID, sheet: string) {
+	const TARGET_SHEET = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(sheet);
 	if (TARGET_SHEET.getFilter())
 		TARGET_SHEET.getFilter().remove();
 	TARGET_SHEET.getRange('A1:D1').setBackground('#c9daf8');
