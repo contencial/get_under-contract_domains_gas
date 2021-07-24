@@ -15,6 +15,7 @@ function collectAllDomainInfo() {
 
 function collectDomainInfo(SPREADSHEET_ID, sheet: string) {
 	const TARGET_SHEET = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(sheet);
+	const URL_123 = "https://docs.google.com/spreadsheets/d/14rJZg2ngAI58OfQv36btTe27LoR3vDA2oVib44CC3y0/edit";
 	let checkDate: string = TARGET_SHEET.getRange('I1').getValue();
 	let domainInfo: Array<Array<string>> = TARGET_SHEET.getRange(2, 2, TARGET_SHEET.getLastRow() - 1, 5).getValues()
 		.filter(function(data) {
@@ -23,7 +24,7 @@ function collectDomainInfo(SPREADSHEET_ID, sheet: string) {
 			let expiration_date = new Date(data[2]);
 			return today <= expiration_date;
 		})
-		.map(data => data.concat(checkDate));
+		.map(data => data.concat(checkDate).concat(`=IF(COUNTIF(IMPORTRANGE("${URL_123}", "Main!E:E"), "${data[0]}"), TRUE, FALSE)`));
 	return domainInfo;
 }
 
@@ -39,35 +40,39 @@ function writeDomainInfo(SPREADSHEET_ID, allDomainInfo: Array<Array<string>>) {
 	TARGET_SHEET.getRange('E1').setValue('自動更新\nフラグ');
 	TARGET_SHEET.getRange('F1').setValue('自動更新\n対象');
 	TARGET_SHEET.getRange('G1').setValue('チェック日');
-	TARGET_SHEET.getRange('H1').setValue('Size');
-	TARGET_SHEET.getRange('I1').setValue(allDomainInfo.length);
-	TARGET_SHEET.getRange('J1').setValue(Utilities.formatDate(new Date(), 'JST', 'yyyy-MM-dd'))
+	TARGET_SHEET.getRange('H1').setValue('123サーバー情報一覧存在確認')
+		.setWrapStrategy(SpreadsheetApp.WrapStrategy.WRAP);
+	TARGET_SHEET.getRange('I1').setValue('Size');
+	TARGET_SHEET.getRange('J1').setValue(allDomainInfo.length);
+	TARGET_SHEET.getRange('K1').setValue(Utilities.formatDate(new Date(), 'JST', 'yyyy-MM-dd'))
 		.setBackground('#efefef');
-	TARGET_SHEET.getRange('K1').setValue('=HYPERLINK("https://www.value-domain.com/login.php", "バリューへGo!!!")');
-	TARGET_SHEET.getRange('L1').setValue('=HYPERLINK("https://muumuu-domain.com/?mode=conpane", "Go to ムームー")');
-	TARGET_SHEET.getRange('M1').setValue('=HYPERLINK("https://navi.onamae.com/domain", "Go to お名前")');
-	TARGET_SHEET.getRange('K1:M1').setFontWeight('bold');
-	TARGET_SHEET.getRange('A1:H1').setBackground('#c9daf8');
-	TARGET_SHEET.getRange('A1:I1').setFontWeight('bold');
-	TARGET_SHEET.getRange('A1:M1')
+	TARGET_SHEET.getRange('L1').setValue('=HYPERLINK("https://www.value-domain.com/login.php", "バリューへGo!!!")');
+	TARGET_SHEET.getRange('M1').setValue('=HYPERLINK("https://muumuu-domain.com/?mode=conpane", "Go to ムームー")');
+	TARGET_SHEET.getRange('N1').setValue('=HYPERLINK("https://navi.onamae.com/domain", "Go to お名前")');
+	TARGET_SHEET.getRange('L1:N1').setFontWeight('bold');
+	TARGET_SHEET.getRange('A1:I1').setBackground('#c9daf8');
+	TARGET_SHEET.getRange('A1:J1').setFontWeight('bold');
+	TARGET_SHEET.getRange('A1:N1')
 		.setHorizontalAlignment('center')
 		.setVerticalAlignment('middle')
 		.setFontFamily('Meiryo');
-	TARGET_SHEET.getRange('H1:I1')
+	TARGET_SHEET.getRange('I1:J1')
 		.setBorder(true, true, true, true, null, null, 'black', SpreadsheetApp.BorderStyle.SOLID);
-	TARGET_SHEET.getRange(2, 1, allDomainInfo.length, 7).setValues(allDomainInfo).setFontFamily('Meiryo');
+	TARGET_SHEET.getRange(2, 1, allDomainInfo.length, 8).setValues(allDomainInfo).setFontFamily('Meiryo');
 	TARGET_SHEET.getRange(2, 1, allDomainInfo.length, 1).setHorizontalAlignment('center');
-	TARGET_SHEET.getRange(1, 1, TARGET_SHEET.getLastRow(), 7).createFilter();
+	TARGET_SHEET.getRange(1, 1, TARGET_SHEET.getLastRow(), 8).createFilter();
 	TARGET_SHEET.setFrozenRows(1);
 	TARGET_SHEET.setRowHeight(1, 40);
-	for (let col = 1; col <= 13; col++) {
+	for (let col = 1; col <= 14; col++) {
 		if (col == 1)
 			TARGET_SHEET.setColumnWidth(col, 50);
 		else if (col == 2)
 			TARGET_SHEET.setColumnWidth(col, 200);
-		else if (col == 8 || col == 9)
+		else if (col == 8)
+			TARGET_SHEET.setColumnWidth(col, 140);
+		else if (col == 9 || col == 10)
 			TARGET_SHEET.setColumnWidth(col, 70);
-		else if (col >= 11 && col <= 13)
+		else if (col >= 12 && col <= 14)
 			TARGET_SHEET.setColumnWidth(col, 150);
 		else
 			TARGET_SHEET.setColumnWidth(col, 100);
