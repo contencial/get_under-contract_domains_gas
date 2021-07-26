@@ -77,4 +77,18 @@ function writeDomainInfo(SPREADSHEET_ID, allDomainInfo: Array<Array<string>>) {
 		else
 			TARGET_SHEET.setColumnWidth(col, 100);
 	}
+	const RANGE = TARGET_SHEET.getRange("H:H");
+	const TRUE_RULE = SpreadsheetApp.newConditionalFormatRule()
+		.whenTextEqualTo("TRUE")
+  		.setFontColor("#1155cc")
+  		.setBold(true)
+		.setRanges([RANGE])
+  		.build();
+	const FALSE_RULE = SpreadsheetApp.newConditionalFormatRule()
+		.whenTextEqualTo("FALSE")
+  		.setFontColor("#FF0000")
+  		.setBold(true)
+		.setRanges([RANGE])
+  		.build();
+	TARGET_SHEET.setConditionalFormatRules([TRUE_RULE, FALSE_RULE]);
 }
