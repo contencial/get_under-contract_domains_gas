@@ -38,7 +38,7 @@ function writeDomainInfo(SPREADSHEET_ID, allDomainInfo: Array<Array<string>>) {
 	TARGET_SHEET.getRange('C1').setValue('取得先');
 	TARGET_SHEET.getRange('D1').setValue('有効期限');
 	TARGET_SHEET.getRange('E1').setValue('自動更新\nフラグ');
-	TARGET_SHEET.getRange('F1').setValue('自動更新\n対象');
+	TARGET_SHEET.getRange('F1').setValue('自動更新\n管理対象');
 	TARGET_SHEET.getRange('G1').setValue('チェック日');
 	TARGET_SHEET.getRange('H1').setValue('123サーバー情報一覧存在確認')
 		.setWrapStrategy(SpreadsheetApp.WrapStrategy.WRAP);

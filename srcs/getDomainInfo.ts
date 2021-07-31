@@ -37,7 +37,7 @@ function getMethodApi() {
 			.map(function(data, index) {
 				autorenew_target = '-';
 				if (data['autorenew'] == 1) {
-					autorenew_target = `=IF(COUNTIF(\'ドメイン自動更新管理\'!B4:B63, "${data['domainname']}"), "対象", "対象外")`;
+					autorenew_target = `=IF(COUNTIF(\'ドメイン自動更新管理\'!B:B, "${data['domainname']}"), "対象", "対象外")`;
 				}
 				return [index + 1,
 						data['domainname'],
@@ -69,7 +69,7 @@ function writeDomainList(domainList: Array<Array<string>>,  TARGET_SHEET) {
 	TARGET_SHEET.getRange('C1').setValue('取得先');
 	TARGET_SHEET.getRange('D1').setValue('有効期限');
 	TARGET_SHEET.getRange('E1').setValue('自動更新\nフラグ');
-	TARGET_SHEET.getRange('F1').setValue('自動更新\n対象');
+	TARGET_SHEET.getRange('F1').setValue('自動更新\n管理対象');
 	TARGET_SHEET.getRange('G1').setValue('Size');
 	TARGET_SHEET.getRange('H1').setValue(domainList.length);
 	TARGET_SHEET.getRange('I1').setValue(Utilities.formatDate(new Date(), 'JST', 'yyyy-MM-dd'))
