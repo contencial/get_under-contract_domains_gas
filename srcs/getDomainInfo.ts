@@ -1,9 +1,10 @@
 function getDomainInfo() {
 	const SPREADSHEET_ID = PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID');
 	const TARGET_SHEET = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName('バリュー');
+	const API_KEY: string = PropertiesService.getScriptProperties().getProperty('API_KEY');
 	let domainList: Array<Array<string>> = [];
 	try {
-			domainList = getMethodApi();
+			domainList = getMethodApi(API_KEY);
 			writeDomainList(domainList, TARGET_SHEET);
 			console.log(`Complete: total_list_number: ${domainList.length}`);
 	} catch (e) {
@@ -11,9 +12,8 @@ function getDomainInfo() {
 	}
 }
 
-function getMethodApi() {
+function getMethodApi(API_KEY) {
 	const VALUE_DOMAIN_URL: string = 'https://api.value-domain.com/v1/domains';
-	const API_KEY: string = PropertiesService.getScriptProperties().getProperty('API_KEY');
 	let options = {
 		headers: {
 			'Authorization': 'Bearer ' + API_KEY
