@@ -1,6 +1,6 @@
 function collectAllDomainInfo() {
 	const SPREADSHEET_ID = PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID');
-	const SHEET_LIST: Array<string> = ['バリュー', 'ムームー', 'お名前'];
+	const SHEET_LIST: Array<string> = ['バリュー', 'ムームー', 'お名前', 'バリュー（デブリ）', 'ムームー（デブリ）', 'お名前（デブリ）'];
 	let allDomainInfo = [];
 	try {
 		SHEET_LIST.forEach(function(element) {

@@ -4,7 +4,7 @@ function getDomainInfo() {
 	const API_KEY: string = PropertiesService.getScriptProperties().getProperty('API_KEY');
 	let domainList: Array<Array<string>> = [];
 	try {
-			domainList = getMethodApi(API_KEY);
+			domainList = getMethodApi(TARGET_SHEET, API_KEY);
 			writeDomainList(domainList, TARGET_SHEET);
 			console.log(`Complete: total_list_number: ${domainList.length}`);
 	} catch (e) {
@@ -12,7 +12,21 @@ function getDomainInfo() {
 	}
 }
 
-function getMethodApi(API_KEY) {
+function getDomainInfoDebris() {
+	const SPREADSHEET_ID = PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID');
+	const TARGET_SHEET = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName('バリュー（デブリ）');
+	const API_KEY: string = PropertiesService.getScriptProperties().getProperty('API_KEY_DEBRIS');
+	let domainList: Array<Array<string>> = [];
+	try {
+			domainList = getMethodApi(TARGET_SHEET, API_KEY);
+			writeDomainList(domainList, TARGET_SHEET);
+			console.log(`Complete: total_list_number: ${domainList.length}`);
+	} catch (e) {
+		console.log(e.message);
+	}
+}
+
+function getMethodApi(TARGET_SHEET, API_KEY) {
 	const VALUE_DOMAIN_URL: string = 'https://api.value-domain.com/v1/domains';
 	let options = {
 		headers: {
@@ -41,7 +55,7 @@ function getMethodApi(API_KEY) {
 				}
 				return [index + 1,
 						data['domainname'],
-						"バリュー",
+						TARGET_SHEET.getSheetName(),
 						data['expirationdate'].replace(/-/g, '/'),
 						data['autorenew'],
 						autorenew_target]
