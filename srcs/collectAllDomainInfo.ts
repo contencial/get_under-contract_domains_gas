@@ -24,7 +24,7 @@ function collectDomainInfo(SPREADSHEET_ID, sheet: string) {
 			let expiration_date = new Date(data[2]);
 			return today <= expiration_date;
 		})
-		.map(data => data.concat(checkDate).concat(`=IF(COUNTIF(IMPORTRANGE("${URL_123}", "Main!E:E"), "${data[0]}"), TRUE, FALSE)`));
+		.map(data => data.concat(checkDate).concat(`=IF(COUNTIF(IMPORTRANGE("${URL_123}", "Main!F:F"), "${data[0]}"), TRUE, FALSE)`));
 	return domainInfo;
 }
 
