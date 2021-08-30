@@ -1,6 +1,6 @@
 function oraganizeEverySheet() {
 	const SPREADSHEET_ID = PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID');
-	const UNDER_CONTRACT_LIST: Array<string> = ['ムームー', 'お名前'];
+	const UNDER_CONTRACT_LIST: Array<string> = ['ムームー', 'お名前', 'ムームー（デブリ）', 'お名前（デブリ）'];
 	UNDER_CONTRACT_LIST.forEach(function(element) {
 		formatUnderContractSheet(SPREADSHEET_ID, element);
 	});

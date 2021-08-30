@@ -7,9 +7,9 @@ function recordDomainData() {
 
 		const REGISTERED_NUM_123 = SHEET_123.getRange('E1').getValue();
 		const REGISTERED_NUM_FTP = SHEET_FTP.getRange('E1').getValue();
-		const TOTAL = SHEET_DOMAIN.getRange('J1').getValue();
 		const LAST_ROW_DOMAIN: number = SHEET_DOMAIN.getLastRow();
 		const DOMAIN_DATA = SHEET_DOMAIN.getRange(`C2:C${LAST_ROW_DOMAIN}`).getValues();
+		const TOTAL = DOMAIN_DATA.length;
 		const VALUE = DOMAIN_DATA.filter(data => data[0] == 'バリュー').length;
 		const MUUMUU = DOMAIN_DATA.filter(data => data[0] == 'ムームー').length;
 		const ONAMAE = DOMAIN_DATA.filter(data => data[0] == 'お名前').length;
