@@ -15,7 +15,8 @@ function collectAllDomainInfo() {
 
 function collectDomainInfo(SPREADSHEET_ID, sheet: string) {
 	const TARGET_SHEET = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(sheet);
-	const URL_123 = "https://docs.google.com/spreadsheets/d/14rJZg2ngAI58OfQv36btTe27LoR3vDA2oVib44CC3y0/edit";
+	const SERVER123_SSID = PropertiesService.getScriptProperties().getProperty('SERVER123_SSID');
+	const URL_123 = `https://docs.google.com/spreadsheets/d/${SERVER123_SSID}/edit`;
 	let checkDate: string = TARGET_SHEET.getRange('I1').getValue();
 	let domainInfo: Array<Array<string>> = TARGET_SHEET.getRange(2, 2, TARGET_SHEET.getLastRow() - 1, 5).getValues()
 		.filter(function(data) {
